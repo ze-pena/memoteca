@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Pensamento } from '../pensamento';
 import { PensamentoService } from '../pensamento.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { lowerCaseValidator } from '../validators/lowerCaseValidator';
 
 @Component({
   selector: 'app-editar-pensamento',
@@ -10,33 +11,52 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
   styleUrl: './editar-pensamento.component.css'
 })
 export class EditarPensamentoComponent {
-  pensamento: Pensamento = {
-    id: 0,
-    conteudo: '',
-    autoria: '',
-    modelo: '',
-  }
+  formulario!: FormGroup
 
   constructor(
     private service: PensamentoService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id")
+
+    this.formulario = this.formBuilder.group({
+      id: [null],
+      conteudo: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(/(.|\s)*\S(.|\s)*/)
+      ])],
+      autoria: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        lowerCaseValidator
+      ])],
+      modelo: ['modelo1']
+    })
+
     this.service.buscar(parseInt(id!)).subscribe((pensamento) => {
-      this.pensamento = pensamento
+      this.formulario.setValue(pensamento)
     })
   }
 
   editarPensamento() {
-    this.service.editar(this.pensamento).subscribe(() => {
+    this.service.editar(this.formulario.value).subscribe(() => {
       this.router.navigate(['/listar-pensamento'])
     })
   }
 
   cancelar() {
     this.router.navigate(['/listar-pensamento'])
+  }
+
+  habilitarBotao(): string {
+    if (this.formulario.valid) {
+      return 'botao'
+    } else {
+      return 'botao__desabilitado'
+    }
   }
 }

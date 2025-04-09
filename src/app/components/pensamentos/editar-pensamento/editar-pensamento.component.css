@@ -5,6 +5,13 @@
 
 .botao {
   margin: 5px;
+  margin: 70px 5px 5px;
+  width: 200px
+}
+
+.botao__desabilitado {
+  margin: 70px 5px 5px;
+  width: 200px;
 }
 
 .editar-pensamentos {
@@ -91,6 +98,12 @@
 
 input[type='radio'] {
   display: none;
+}
+
+.mensagem__erro {
+  font-size: 12px;
+  color: red;
+  margin: -25px 5px 20px 0;
 }
 
 .radio-modelo label {
