@@ -1,0 +1,13 @@
+.carregar-mais {
+  margin: 10px 0 10px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.mensagem-center {
+  padding: 10px 0 10px;
+  text-align: center;
+}
