@@ -34,7 +34,8 @@ export class EditarPensamentoComponent {
         Validators.minLength(3),
         lowerCaseValidator
       ])],
-      modelo: ['modelo1']
+      modelo: ['modelo1'],
+      favorito: [false]
     })
 
     this.service.buscar(parseInt(id!)).subscribe((pensamento) => {

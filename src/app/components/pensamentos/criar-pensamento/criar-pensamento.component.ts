@@ -28,10 +28,10 @@ export class CriarPensamentoComponent {
       autoria: ['', Validators.compose([
         Validators.required,
         Validators.minLength(3),
-        // Validators.pattern(/^([a-z0-9_\-]+[\s]*)+$/)
         lowerCaseValidator
       ])],
-      modelo: ['modelo1']
+      modelo: ['modelo1'],
+      favorito: [false]
     })
   }
 
